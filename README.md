@@ -44,6 +44,28 @@ steps:
       from_secret: google-application-credentials
 ```
 
+## Use the target option to build particular final stage
+
+You can build specific target
+
+```yaml
+kind: pipeline
+name: default
+
+steps:
+- name: publish
+  image: banzaicloud/drone-kaniko
+  settings:
+    target: production
+    skip_unused_stages: true # will not build unnecessary stages
+    registry: gcr.io
+    repo: example.com/example-project
+    tags: ${DRONE_COMMIT_SHA}
+    cache: true
+    json_key:
+      from_secret: google-application-credentials
+```
+
 ## Use `.tags` file for tagging
 
 Similarily to official
