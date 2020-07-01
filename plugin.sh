@@ -32,10 +32,13 @@ EXTRA_OPTS=""
 
 if [[ -n "${PLUGIN_TARGET:-}" ]]; then
     TARGET="--target=${PLUGIN_TARGET}"
+    if [[ "${PLUGIN_SKIP_UNUSED_STAGES:-}" == "true" ]]; then
+      EXTRA_OPTS="${EXTRA_OPTS} --skip-unused-stages"
+    fi
 fi
 
 if [[ "${PLUGIN_SKIP_TLS_VERIFY:-}" == "true" ]]; then
-    EXTRA_OPTS="--skip-tls-verify=true"
+    EXTRA_OPTS="${EXTRA_OPTS} --skip-tls-verify=true"
 fi
 
 if [[ "${PLUGIN_CACHE:-}" == "true" ]]; then
