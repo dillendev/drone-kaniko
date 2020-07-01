@@ -39,9 +39,4 @@ jobs:
         uses: docker/build-push-action@v1.1.0
         with:
           repository: postclick/drone-kaniko
-          # Path to the build context
-          path: .
-          # Path to the Dockerfile (Default is '{path}/Dockerfile')
-          dockerfile: '{path}/Dockerfile'
-          # Sets the target stage to build
           push: true
