@@ -102,6 +102,7 @@ fi
 /kaniko/executor -v ${LOG} \
     --context=${CONTEXT} \
     --dockerfile=${DOCKERFILE} \
+    --use-new-run \
     ${EXTRA_OPTS} \
     ${DESTINATIONS} \
     ${CACHE:-} \
