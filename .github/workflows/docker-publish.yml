@@ -36,8 +36,18 @@ jobs:
     if: github.event == 'push'
     steps:
       - uses: actions/checkout@v2
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v1.1.0
+      - name: Tag extraction
+        run: |
+          TAG=(cat Dockerfile | grep FROM | head -1 | grep -o -E ":.+" | grep -o -E "[\.0-9]+")
+          mkdir -p target
+          echo "$TAG" > target/TAG_NAME
+      - name: Docker Build & Push to Docker Hub
+        uses: opspresso/action-docker@master
         with:
-          repository: postclick/drone-kaniko
-          push: true
+          args: --docker
+        env:
+          USERNAME: ${{ secrets.DOCKER_LOGIN }}
+          PASSWORD: ${{ secrets.DOCKER_TOKEN }}
+          DOCKERFILE: "Dockerfile"
+          IMAGE_NAME: "postclick/drone-kaniko"
+          LATEST: "true"
