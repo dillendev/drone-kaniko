@@ -24,6 +24,7 @@ jobs:
             docker build . --file Dockerfile
           fi
   push:
+    needs: [build]
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
