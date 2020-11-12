@@ -124,6 +124,34 @@ steps:
       from_secret: docker-password
 ```
 
+## Auto tag from env
+
+Set `auto_tag_from_env: [env1, env2, ..., envN]`.
+
+```yaml
+kind: pipeline
+name: default
+
+steps:
+- name: build
+  image: golang
+  commands:
+      - go get 
+      - go build
+- name: publish
+  image: postclick/drone-kaniko
+  settings:
+    registry: registry.example.com 
+    repo: registry.example.com/example-project
+    auto_tag_from_env: [ DRONE_COMMIT_SHA, DRONE_SOURCE_BRANCH ] # get values from env and use as tag
+    # auto_tag: true # <= it must be left undefined to use auto_tag_from_env
+    # tags: ${DRONE_COMMIT_SHA} <= it must be left undefined to use auto_tag_from_env
+    username:
+      from_secret: docker-username
+    password:
+      from_secret: docker-password
+```
+
 ## Test that it can build
 
 ```bash
