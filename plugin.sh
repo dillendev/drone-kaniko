@@ -92,7 +92,7 @@ if [ -n "${PLUGIN_TAGS:-}" ]; then
 elif [ -f .tags ]; then
     DESTINATIONS=$(cat .tags| tr '/' '_' | tr ',' '\n' | while read tag; do echo "--destination=${REGISTRY}/${PLUGIN_REPO}:${tag} "; done)
 elif [ -n "${PLUGIN_AUTO_TAG_FROM_ENV:-}" ]; then
-    DESTINATIONS=$(echo "${PLUGIN_AUTO_TAG_FROM_ENV}" | tr '/' '_' | tr ',' '\n' | while read tag_env; do echo "--destination=${REGISTRY}/${PLUGIN_REPO}:$(eval "echo \$$tag_env") "; done)
+    DESTINATIONS=$(echo "${PLUGIN_AUTO_TAG_FROM_ENV}" | tr ',' '\n' | while read tag_env; do echo "--destination=${REGISTRY}/${PLUGIN_REPO}:$(echo "$(eval "echo \$$tag_env")" | tr '/' '_') "; done)
 elif [ -n "${PLUGIN_REPO:-}" ]; then
     DESTINATIONS="--destination=${REGISTRY}/${PLUGIN_REPO}:latest"
 else
