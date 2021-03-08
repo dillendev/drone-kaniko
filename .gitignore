@@ -10,3 +10,6 @@
 
 # kaniko base image cache files
 sha256:*
+
+# IDE files
+.vscode
