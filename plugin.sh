@@ -25,6 +25,10 @@ if [ "${PLUGIN_JSON_KEY:-}" ];then
     export GOOGLE_APPLICATION_CREDENTIALS=/kaniko/gcr.json
 fi
 
+if [ -n "${PLUGIN_CONTAINER_RUNTIME}" ]; then
+    export container="${PLUGIN_CONTAINER_RUNTIME}"
+fi
+
 DOCKERFILE=${PLUGIN_DOCKERFILE:-Dockerfile}
 CONTEXT=${PLUGIN_CONTEXT:-$PWD}
 LOG=${PLUGIN_LOG:-info}
